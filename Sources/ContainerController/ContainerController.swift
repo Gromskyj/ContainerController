@@ -366,7 +366,17 @@ open class ContainerController: NSObject {
         let frame = CGRect(x: 0, y: 0, width: deviceWidth, height: deviceHeight * 2)
         view = ContainerView(frame: frame)
         view.backgroundColor = .systemBackground
+        view.translatesAutoresizingMaskIntoConstraints = false
         controller?.view.addSubview(view)
+        if let v = controller?.view {
+            NSLayoutConstraint.activate([
+                view.leadingAnchor.constraint(equalTo: v.leadingAnchor),
+                view.trailingAnchor.constraint(equalTo:v.trailingAnchor),
+                view.topAnchor.constraint(equalTo: v.topAnchor),
+                view.bottomAnchor.constraint(equalTo: v.bottomAnchor)
+            ])
+        }
+        
         
         panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(_:)))
         panGesture?.isEnabled = layout.movingEnabled
